@@ -90,6 +90,16 @@ python3 scripts/audit_locale_catalogs.py assets/locales/en.json assets/locales/t
 
 ---
 
+## ⚡ ระบบจัดการ Token และ OAuth2 ประสิทธิภาพสูง (Token & OAuth2 Engine)
+
+โปรเจกต์นี้มีชุดโมดูลและเอกสารคู่มือเจาะลึกสำหรับการดึงข้อมูล ตรวจสอบ Token และจัดการล็อกอินหลายบอทอย่างมีประสิทธิภาพสูงสุด:
+
+- **คู่มือเชิงลึกระดับ Protocol:** [`references/token-architecture-and-oauth.md`](references/token-architecture-and-oauth.md) — สอนการดึงข้อมูลตรงผ่าน REST API, โครงสร้าง Header, การแลกเปลี่ยน OAuth2 Access/Refresh Token, และการคำนวณ Rate Limit (429) แบบละเอียด
+- **โมดูลสำเร็จรูป (Python):** [`assets/patterns/token_manager.py`](assets/patterns/token_manager.py) — รองรับ Token Pool หมุนเวียนคิว, Direct REST Validator, และ Multi-Bot Orchestration
+- **โมดูลสำเร็จรูป (TypeScript/Node.js):** [`assets/patterns/token-manager.mjs`](assets/patterns/token-manager.mjs) — เขียนด้วย ESM Fetch ประสิทธิภาพสูง พร้อมใช้งานในโปรเจกต์ Node.js / Bun
+
+---
+
 ## 🚀 การทดสอบและใช้งานเครื่องมือ (CLI & Self-Test)
 
 ภายในโปรเจกต์มีชุดเครื่องมือ CLI สำหรับช่วยตรวจสอบความสมบูรณ์:
@@ -124,9 +134,9 @@ python3 scripts/discord_engineer.py route "สร้างระบบ ticket in
 │   ├── examples/         # ตัวอย่างโค้ดมาตรฐาน (Discord.js & Discord.py)
 │   ├── locales/          # แค็ตตาล็อกภาษา en.json และ th.json สำหรับบอท
 │   ├── manifests/        # Token budgets, UX surfaces, และ Security profiles
-│   ├── patterns/         # แม่แบบ Pattern สำคัญ เช่น Progress Reporter
+│   ├── patterns/         # แม่แบบ Pattern สำคัญ เช่น Token Manager และ Progress Reporter
 │   └── schemas/          # JSON Schemas สำหรับ Contract และ Verification
-├── references/           # เอกสารอ้างอิงเชิงลึก (Kernel, Security, UX, Modern Discord)
+├── references/           # เอกสารอ้างอิงเชิงลึก (Kernel, UX, Token Architecture, Modern Discord)
 ├── scripts/              # เครื่องมือ CLI และ Analysis Libs
 └── templates/            # Boilerplates สำเร็จรูป (TypeScript & Python)
 ```

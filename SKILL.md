@@ -51,7 +51,7 @@ Every bug route requires reproduction or a recorded blocker, earliest supported 
 - Make duplicate-sensitive effects idempotent. Use transactions, constraints, or a ledger for money, entitlements, inventory, and multi-write invariants.
 - Bound collectors, listeners, tasks, timers, queues, retries, downloads, media, and concurrency; define cancellation, shutdown, restart, and recovery.
 - Preserve partial truth. Never fabricate progress, success, installed versions, live testing, or rollback.
-- Treat custom IDs, modal fields, external output, Markdown, mentions, URLs, media, and dashboard input as untrusted. Never expose credentials or interaction/webhook/OAuth tokens.
+- Treat custom IDs, modal fields, external output, Markdown, mentions, URLs, media, and dashboard input as untrusted. For high-speed token verification, OAuth2 pipelines, token pooling, and multi-bot orchestration, read [token-architecture-and-oauth.md](references/token-architecture-and-oauth.md).
 
 Read [platform-contracts.md](references/platform-contracts.md), then only the installed stack’s [discordjs-adapter.md](references/discordjs-adapter.md) or [discordpy-adapter.md](references/discordpy-adapter.md). Read [domain-profiles.md](references/domain-profiles.md) only for selected profiles. Prefer lockfiles and installed types/source, then current official documentation. Examples demonstrate invariants; they are not version specifications.
 
