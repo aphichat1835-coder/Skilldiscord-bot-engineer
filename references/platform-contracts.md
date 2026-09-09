@@ -49,7 +49,7 @@ At the side-effect boundary check what applies:
 
 UI visibility, command defaults, role names, custom IDs, cached permission lists, and client-submitted guild/user IDs are not sufficient authorization.
 
-Treat privileged intents, partial data, cache policy, OAuth/Developer Portal configuration, install context, and integration type as runtime dependencies. A cache miss is not proof of non-existence.
+Treat privileged intents, partial data, cache policy, OAuth/Developer Portal configuration, install context, and integration type as runtime dependencies. A cache miss is not proof of non-existence. Read [modern-discord-features.md](modern-discord-features.md) for detailed User-Installable Apps, Activities, and AutoMod contracts.
 
 ## Events and state
 

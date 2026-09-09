@@ -11,10 +11,22 @@ AI Skill สำหรับวิศวกรพัฒนา Discord Bot แล�
 ## 🌟 จุดเด่นและความสามารถ (Capabilities)
 
 - **Interaction & Components V2**: จัดการ Application Commands, Modal, Buttons, Select Menus, และ State Lifecycle อย่างถูกต้อง
+- **Modern Discord Features**: รองรับ User-Installable Apps (`contexts: [0, 1, 2]`), Discord Activities (Embedded App SDK), และ AutoMod v2
 - **Domain Invariants**: ออกแบบและตรวจสอบระบบ Moderation, Verification, Tickets, Economy (Ledger/Transactions), Voice/Music, และ OAuth Dashboard
+- **Thai & Multi-language Support**: มี Locale Catalog ภาษาไทยและอังกฤษ ([`assets/locales/`](assets/locales/)) พร้อมระบบตรวจสอบความสอดคล้อง
 - **Security & Authorization**: ตรวจสอบสิทธิ์การใช้งาน (Permissions, Scopes, Intents), ป้องกัน Race Conditions, Replay Attacks, และการรั่วไหลของ Tokens
 - **Evidence-Oriented SDLC**: วางแผนการพัฒนา แก้ไขจุดบกพร่องที่ต้นตอ (Root Cause Analysis) และทดสอบก่อนเคลมว่า "เสร็จสมบูรณ์" ด้วยระบบ Gate
+- **Starter Templates**: มีแม่แบบบอทสำเร็จรูปทั้ง TypeScript (Discord.js) และ Python (Discord.py) พร้อม Docker
 - **CLI Tooling Included**: มีชุดคำสั่ง `discord_engineer.py` สำหรับช่วย AI ประเมินงบประมาณบริบท (Token Budget), ตรวจสอบโค้ด, และจำลองสถานการณ์
+
+---
+
+## 🛠️ โครงสร้างเริ่มต้น (Starter Templates)
+
+โปรเจกต์นี้มี Starter Templates สำเร็จรูปที่เขียนตามหลักสถาปัตยกรรมของ Skill นี้โดยตรง:
+
+- [`templates/discordjs-starter/`](templates/discordjs-starter/) — Discord.js v14+ (TypeScript, ES Modules, User App slash command, Docker)
+- [`templates/discordpy-starter/`](templates/discordpy-starter/) — Discord.py 2.4+ (Python 3.11+, Cogs, User App slash command, Error handler, Docker)
 
 ---
 
@@ -65,6 +77,19 @@ git clone https://github.com/aphichat1835-coder/Skilldiscord-bot-engineer.git ~/
 
 ---
 
+## 🌐 ระบบภาษาและการแปล (Localization)
+
+โปรเจกต์มีแค็ตตาล็อกข้อความตอบกลับและ Error messages รองรับสองภาษา (อังกฤษและไทย):
+- [`assets/locales/en.json`](assets/locales/en.json)
+- [`assets/locales/th.json`](assets/locales/th.json)
+
+สามารถตรวจสอบความถูกต้องของ Placeholder และความสมบูรณ์ของการแปลได้ด้วยคำสั่ง:
+```bash
+python3 scripts/audit_locale_catalogs.py assets/locales/en.json assets/locales/th.json --strict
+```
+
+---
+
 ## 🚀 การทดสอบและใช้งานเครื่องมือ (CLI & Self-Test)
 
 ภายในโปรเจกต์มีชุดเครื่องมือ CLI สำหรับช่วยตรวจสอบความสมบูรณ์:
@@ -97,15 +122,17 @@ python3 scripts/discord_engineer.py route "สร้างระบบ ticket in
 ├── assets/
 │   ├── evals/            # ชุดทดสอบ Benchmark และ Scenario สำหรับประเมินความแม่นยำ
 │   ├── examples/         # ตัวอย่างโค้ดมาตรฐาน (Discord.js & Discord.py)
+│   ├── locales/          # แค็ตตาล็อกภาษา en.json และ th.json สำหรับบอท
 │   ├── manifests/        # Token budgets, UX surfaces, และ Security profiles
 │   ├── patterns/         # แม่แบบ Pattern สำคัญ เช่น Progress Reporter
 │   └── schemas/          # JSON Schemas สำหรับ Contract และ Verification
-├── references/           # เอกสารอ้างอิงเชิงลึก (Kernel, Security, UX, SDLC)
-└── scripts/              # เครื่องมือ CLI และ Analysis Libs
+├── references/           # เอกสารอ้างอิงเชิงลึก (Kernel, Security, UX, Modern Discord)
+├── scripts/              # เครื่องมือ CLI และ Analysis Libs
+└── templates/            # Boilerplates สำเร็จรูป (TypeScript & Python)
 ```
 
 ---
 
 ## 📄 ใบอนุญาต (License)
 
-โปรเจกต์นี้เผยแพร่ภายใต้ [MIT License](LICENSE)
+โปรเจกต์นี้เผยแพร่ภายใต้ [MIT License](LICENSE)
