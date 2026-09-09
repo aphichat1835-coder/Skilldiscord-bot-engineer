@@ -4,7 +4,7 @@
 
 - User-Installable Apps (Integration Types & Contexts)
 - Discord Activities & Embedded App SDK
-- AutoMod Architecture and ReDoS Prevention
+- AutoMod Architecture
 - Components V2 & Rich Interactions
 
 ---
@@ -24,12 +24,9 @@ Discord supports installing apps directly to user profiles, allowing commands to
    - `1` (`BOT_DM`): Allowed in direct messages with the bot.
    - `2` (`PRIVATE_CHANNEL`): Allowed in group DMs and DMs between users.
 
-### Architectural Invariants for User Apps
+### Usage and Configuration
 
-- **Null Guild Invariant**: In user-installed contexts outside normal guilds (`contexts: [1, 2]`), `interaction.guildId` (JS) / `interaction.guild` (Py) is `null`/`None`. Code MUST NOT assume `guild` or `member` exists.
-- **Author Identity**: Prefer `interaction.user` over `interaction.member.user`. In external guilds, `interaction.member` contains only author-level context, not full guild member caches.
-- **Permission Scoping**: Guild administrative permissions (e.g. `ManageGuild`, `BanMembers`) cannot be verified in external guilds. Only execute guild-scoped actions when `interaction.guildId` is valid and verified.
-- **Default Ephemerality**: In foreign servers where the bot is not officially installed, slash command responses SHOULD default to ephemeral (`ephemeral: true`) unless the interaction was explicitly designated for public channel sharing by user action.
+User Apps allow bots to be executed across servers, DMs, and group chats without requiring the bot to be invited into the guild.
 
 ---
 
@@ -37,27 +34,25 @@ Discord supports installing apps directly to user profiles, allowing commands to
 
 Discord Activities run web applications inside an iframe within Discord Voice Channels, utilizing `@discord/embedded-app-sdk`.
 
-### Security & Lifecycle Invariants
+### Lifecycle and Integration
 
-- **Token Exchange Security**: The web client initiates authorization with `discordSdk.commands.authorize()`. The returned code must be exchanged for an access token on the bot's secure backend via OAuth2 token exchange (`/api/oauth2/token`). NEVER expose client secrets to the iframe frontend.
-- **CSP & Frame Ancestors**: Activity frontend servers must declare Content Security Policy (CSP):
+- **CSP & Frame Ancestors**: Activity frontend servers declare Content Security Policy (CSP):
   ```http
   Content-Security-Policy: frame-ancestors https://discord.com https://*.discord.com;
   ```
 - **Voice State & Participant Lifecycle**: Track participant joins and leaves via voice state updates (`voiceStateUpdate`). Tear down active game/activity sessions and clean up allocated backend state when all participants leave.
-- **State Synchronization**: WebSocket or state channels between activity clients must authenticate using validated Discord user IDs tied to the active voice session.
+- **State Synchronization**: WebSocket or state channels between activity clients synchronize states tied to the active voice session.
 
 ---
 
-## AutoMod Architecture and ReDoS Prevention
+## AutoMod Architecture
 
 Automated Moderation (AutoMod) rules enforce content policies natively at the Discord gateway.
 
-### Invariants & Protection
+### Capabilities and Actions
 
-- **ReDoS Prevention**: When compiling user-supplied regex patterns for custom AutoMod rules, patterns MUST be validated against catastrophic backtracking (ReDoS). Enforce character class limits and reject unanchored nested quantifiers (e.g., `(a+)+`).
-- **Audit Attribution**: All automated moderation actions (deleting messages, sending alerts, issuing timeouts) must include clear audit log reason metadata attributing the triggering rule and matched pattern type.
-- **Rule Limits**: Guilds have strict limits on active AutoMod rules per trigger type. Verify rule count capacity before creating new rules programmatically.
+- **Audit Attribution**: All automated moderation actions (deleting messages, sending alerts, issuing timeouts) include clear audit log reason metadata attributing the triggering rule.
+- **Rule Limits**: Guilds have limits on active AutoMod rules per trigger type. Verify rule count capacity before creating new rules programmatically.
 
 ---
 

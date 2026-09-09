@@ -23,7 +23,6 @@ export async function execute(interaction: ChatInputCommandInteraction): Promise
   const sent = await interaction.reply({
     content: 'Pinging...',
     fetchReply: true,
-    ephemeral: !interaction.inGuild(), // Default to ephemeral in external/DM contexts
   });
 
   const roundtrip = sent.createdTimestamp - interaction.createdTimestamp;

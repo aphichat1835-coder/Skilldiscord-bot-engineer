@@ -12,11 +12,8 @@ class General(commands.Cog):
     @app_commands.user_install()
     @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     async def ping(self, interaction: discord.Interaction):
-        # Invariant: ephemeral in private / user DM contexts
-        is_ephemeral = interaction.guild is None
-
         start_time = time.monotonic()
-        await interaction.response.send_message("Pinging...", ephemeral=is_ephemeral)
+        await interaction.response.send_message("Pinging...")
 
         end_time = time.monotonic()
         roundtrip_ms = round((end_time - start_time) * 1000)
